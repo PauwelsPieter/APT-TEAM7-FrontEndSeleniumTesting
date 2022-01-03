@@ -50,46 +50,45 @@ class MyTest(unittest.TestCase):
         except:
             assert False, "Select list of countries couldn't be loaded within 10 seconds or was empty."
 
-    # Todo: uncomment as soon as model-service back working
-    # # Test if list of cars is shown after year selection on /modelsbyyear
-    # def test_getModelsByYear(self):
-    #     driver = self.driver
-    #     driver.get(self.url+"/modelsbyyear")
+    # Test if list of cars is shown after year selection on /modelsbyyear
+    def test_getModelsByYear(self):
+        driver = self.driver
+        driver.get(self.url+"/modelsbyyear")
 
-    #     try:
-    #         WebDriverWait(driver, 10).until(
-    #             EC.presence_of_element_located((By.XPATH, "//select//option/following-sibling::option"))
-    #         )
-    #         driver.find_element_by_xpath("//select//option[2]").click()
-    #         try:
-    #             listElement = WebDriverWait(driver, 10).until(
-    #                 EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'list')]"))
-    #             )
-    #             assert True
-    #         except:
-    #             assert False, "List of cars couldn't be loaded within 10 seconds."
-    #     except:
-    #         assert False, "Select list of years couldn't be loaded within 10 seconds or was empty."
+        try:
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//select//option/following-sibling::option"))
+            )
+            driver.find_element_by_xpath("//select//option[2]").click()
+            try:
+                listElement = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'list')]"))
+                )
+                assert True
+            except:
+                assert False, "List of cars couldn't be loaded within 10 seconds."
+        except:
+            assert False, "Select list of years couldn't be loaded within 10 seconds or was empty."
     
-    # # Test if list of cars is shown after type selection on /modelsbytype
-    # def test_getModelsByType(self):
-    #     driver = self.driver
-    #     driver.get(self.url+"/modelsbytype")
+    # Test if list of cars is shown after type selection on /modelsbytype
+    def test_getModelsByType(self):
+        driver = self.driver
+        driver.get(self.url+"/modelsbytype")
 
-    #     try:
-    #         WebDriverWait(driver, 10).until(
-    #             EC.presence_of_element_located((By.XPATH, "//select//option/following-sibling::option"))
-    #         )
-    #         driver.find_element_by_xpath("//select//option[2]").click()
-    #         try:
-    #             listElement = WebDriverWait(driver, 10).until(
-    #                 EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'list')]"))
-    #             )
-    #             assert True
-    #         except:
-    #             assert False, "List of cars couldn't be loaded within 10 seconds."
-    #     except:
-    #         assert False, "Select list of types couldn't be loaded within 10 seconds or was empty."
+        try:
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//select//option/following-sibling::option"))
+            )
+            driver.find_element_by_xpath("//select//option[2]").click()
+            try:
+                listElement = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'list')]"))
+                )
+                assert True
+            except:
+                assert False, "List of cars couldn't be loaded within 10 seconds."
+        except:
+            assert False, "Select list of types couldn't be loaded within 10 seconds or was empty."
 
     # Test create brand
     def test_createBrand(self):
@@ -153,6 +152,24 @@ class MyTest(unittest.TestCase):
             assert False, "No edit button found or loading took too long."
 
     # Todo: add delete model test as soon as brand-service back working
+    def test_deleteModel(self):
+        driver = self.driver
+        driver.get(self.url)
+
+        try:
+            listElement = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'car')]//div[contains(@class, 'model')]//button[contains(@title, 'Delete')]"))
+            )
+            driver.find_element_by_xpath("(//div[contains(@class, 'car')]//div[contains(@class, 'model')]//button[contains(@title, 'Delete')])[1]").click()
+            try:
+                WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'Toastify')]//div[text()='Model deleted']"))
+                )
+                assert True
+            except:
+                assert False, "Deleting took too long or resulted in an error."
+        except:
+            assert False, "No delete button found or loading took too long."
 
     def tearDown(self):
         self.driver.close()
