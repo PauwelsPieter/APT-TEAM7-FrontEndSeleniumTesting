@@ -11,7 +11,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
 class MyTest(unittest.TestCase):
-    url = "http://localhost:3000"
+    url = "https://apt-team7.netlify.app"
 
     def setUp(self):
         s = Service(ChromeDriverManager().install())
